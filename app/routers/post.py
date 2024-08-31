@@ -16,7 +16,7 @@ def get_posts(db: Session = Depends(get_db), current_user: int = Depends(oauth2.
               limit: int = 10, skip: int = 0, search: Optional[str] = ""):
     # cursor.execute("""SELECT * FROM posts""")
     # posts = cursor.fetchall()
-    print(search)
+    # print(search)
 
     posts = db.query(models.Post).filter(models.Post.title.contains(search)).limit(limit).offset(skip).all()
     return posts
@@ -29,7 +29,7 @@ def create_posts(post: schemas.PostCreate, db: Session = Depends(get_db),
     # new_post = cursor.fetchone()
 
     # conn.commit()
-    print(current_user.email)
+    # print(current_user.email)
     new_post = models.Post(**post.model_dump(), owner_id = current_user.id)
     db.add(new_post)
     db.commit()
