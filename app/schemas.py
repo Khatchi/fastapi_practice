@@ -24,6 +24,9 @@ class PostBase(BaseModel):
     content: str
     published: bool = True
 
+    class Config:
+        from_attributes = True
+
 class PostCreate(PostBase):
     pass
 
@@ -32,8 +35,8 @@ class UserOut(BaseModel):
     email: EmailStr
     created_at: datetime
 
-    # class Config:
-    #     orm_mode = True
+    class Config:
+        from_attributes = True
 
 class Post(PostBase):
     id: int
@@ -44,21 +47,46 @@ class Post(PostBase):
     owner_id: int
     owner: UserOut
 
+    class Config:
+        from_attributes = True
+
+class PostOut(BaseModel):
+    Post: Post
+    votes: int
+
+    class Config:
+        from_attributes = True
+
 class UserCreate(BaseModel):
     email: EmailStr
     password: str
+
+    class Config:
+        from_attributes = True
 
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
 
+    class Config:
+        from_attributes = True
+
 class Token(BaseModel):
     access_token: str
     token_type: str
 
+    class Config:
+        from_attributes = True
+
 class TokenData(BaseModel):
     id: Optional[str | int] = None
+
+    class Config:
+        from_attributes = True
 
 class Vote(BaseModel):
     post_id: int
     dir: conint(le=1)
+
+    class Config:
+        from_attributes = True
